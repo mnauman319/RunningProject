@@ -1,9 +1,8 @@
-from sqlite3 import Cursor
+from tracemalloc import start
 import pymysql
-import sys
 from run import Run
-
-
+import datetime as dt
+from user import User
 def get_all_runs(conn:pymysql.connect):
     cursor = conn.cursor()
     sql = 'select * from runs'
@@ -19,6 +18,26 @@ def get_run_by_id(conn:pymysql.connect, id:int):
     if data == ():
         raise ValueError("There is no run with id of " + str(id) + " enter a valid id." )
     return data
+
+def get_run_by_date(conn:pymysql.connect, date:str):
+    cursor = conn.cursor()
+    sql = 'select * from runs where date_run = %s'
+    cursor.execute(sql, date)
+    data = cursor.fetchall()
+    if data == ():
+        raise ValueError("There is no run with date of " + str(date) + " enter a valid date." )
+    return data
+
+# def get_runs_by_user(conn:pymysql.connect, user:User):
+
+
+def get_runs_in_date_range(conn:pymysql.connect, start_date:str, end_date:str):
+    cursor = conn.cursor()
+    sql = 'select * from runs where date_run >= %s and date_run <= %s'
+    cursor.execute(sql, [start_date, end_date])
+    data = cursor.fetchall()
+    return data
+
 
 def create_run(conn:pymysql.connect, run:Run):
     cursor = conn.cursor()
