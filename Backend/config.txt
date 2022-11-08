@@ -1,4 +1,4 @@
-username = admin
-password = running-database
-end_point = running-database.ctdlyi2anz8m.us-east-1.rds.amazonaws.com
+username = mark_nauman
+password = Running-Database
+end_point = running-server.mysql.database.azure.com
 database = Running_Database

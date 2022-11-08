@@ -44,7 +44,7 @@ def create_run(conn:pymysql.connect, run:Run):
     sql = 'Insert into runs(duration,distance,pace,heart_rate,date_run,notes, run_type) values(%s, %s, %s, %s, %s, %s, %s);'
     cursor.execute(sql, run.to_database_form())
     conn.commit()
-
+    return cursor.fetchall()
 def delete_run_by_id(conn:pymysql.connect, id:int):
     try:
         get_run_by_id(conn, id) == ()
