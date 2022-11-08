@@ -1,9 +1,10 @@
 from queue import Empty
 import pymysql, handler, json, StatisticsService
 from run import Run
-from flask import Flask
+from flask import Flask, jsonify
 from markupsafe import escape
 from collections import defaultdict
+
 app = Flask(__name__)
 app.config.update(
     testing=True,
@@ -13,7 +14,7 @@ app.config.update(
 def hello_world():
     return f"<p>Hello, Sam!</p>"
 
-@app.route("/get_run/<int:id>")
+@app.route("/get_run_by_id/<int:id>", methods=['GET'])
 def get_run_by_id(id):
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
@@ -22,7 +23,7 @@ def get_run_by_id(id):
     db_conn.close()
     return run.toJSON()
 
-@app.route("/get_run/<date>")
+@app.route("/get_run/<date>", methods=['GET'])
 def get_run_by_date(date):
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
@@ -31,7 +32,7 @@ def get_run_by_date(date):
     db_conn.close()
     return run.toJSON()
 
-@app.route("/get_runs")
+@app.route("/get_runs", methods=['GET'])
 def get_all_runs():
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
@@ -43,7 +44,7 @@ def get_all_runs():
     print(output)
     return output
 
-@app.route("/get_runs/<start_date>/<end_date>")
+@app.route("/get_runs/<start_date>/<end_date>", methods=['GET'])
 def get_runs_in_date_range(start_date, end_date):
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
@@ -55,7 +56,7 @@ def get_runs_in_date_range(start_date, end_date):
     print(output)
     return output
 
-@app.route("/delete_run/<int:id>")
+@app.route("/delete_run/<int:id>", methods=['POST'])
 def delete_run_by_id(id):
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
