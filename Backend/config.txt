@@ -1,4 +1,0 @@
-username = mark_nauman
-password = Running-Database
-end_point = running-server.mysql.database.azure.com
-database = Running_Database
