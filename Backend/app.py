@@ -14,7 +14,7 @@ app.config.update(
 def hello_world():
     return f"<p>Hello, Sam!</p>"
 
-@app.route("/get_run_by_id/<int:id>", methods=['GET'])
+@app.route("/run/<int:id>", methods=['GET'])
 def get_run_by_id(id):
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
@@ -23,7 +23,7 @@ def get_run_by_id(id):
     db_conn.close()
     return run.toJSON()
 
-@app.route("/get_run/<date>", methods=['GET'])
+@app.route("/run/?date=<date>", methods=['GET'])
 def get_run_by_date(date):
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
@@ -32,7 +32,7 @@ def get_run_by_date(date):
     db_conn.close()
     return run.toJSON()
 
-@app.route("/get_runs", methods=['GET'])
+@app.route("/runs", methods=['GET'])
 def get_all_runs():
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
@@ -44,7 +44,7 @@ def get_all_runs():
     print(output)
     return output
 
-@app.route("/get_runs/<start_date>/<end_date>", methods=['GET'])
+@app.route("/runs/<start_date>/<end_date>", methods=['GET'])
 def get_runs_in_date_range(start_date, end_date):
     db_conn = database_connection()
     db_conn = db_conn.connect_to_db(db_conn.retrieve_login_data())
